@@ -16,6 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final Map<String, String> registeredUsers = {
     'usuario1@example.com': 'contrasena123',
     'usuario2@example.com': 'password456',
+    'yarethzybeltran80@gmail.com': 'yarethzy1821',
     // Agrega más usuarios según sea necesario
   };
 

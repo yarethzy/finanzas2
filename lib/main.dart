@@ -1,29 +1,20 @@
+import 'package:finanzas2/page/login.dart';
+import 'package:finanzas2/page/registrar.dart';
 import 'package:flutter/material.dart';
-import 'package:couchbase_lite/couchbase_lite.dart';
 
-void main() async {
-  // Asegúrate de que los widgets estén inicializados
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // Inicializar Couchbase Lite
-  await CouchbaseLite.init();
-
-  // Lanzar la aplicación
+void main() {
   runApp(MyApp());
-}
-
-class CouchbaseLite {
-  static Future<void> init() async {
-    // Agrega la lógica de inicialización si es necesario
-  }
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Couchbase Lite Example',
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(),
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.purple[100],
+      ),
     );
   }
 }
@@ -33,22 +24,32 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter Couchbase Lite Example'),
+        title: Text('FINANCEMANAGER'),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            // Aquí puedes poner el código del paso 3
-            final Database database =
-                await Database.initWithName('my_database');
-            final MutableDocument document = MutableDocument();
-            document.setString('name', 'John Doe');
-            document.setInt('age', 30);
-            await database.saveDocument(document);
-
-            // Puedes agregar más operaciones aquí según tus necesidades
-          },
-          child: Text('Operaciones con Couchbase Lite'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
+              },
+              child: Text('Iniciar Sesión'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterScreen()),
+                );
+              },
+              child: Text('Registrarse'),
+            ),
+          ],
         ),
       ),
     );
