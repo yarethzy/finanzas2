@@ -1,7 +1,7 @@
-import 'package:finanzas2/main.dart';
+import 'package:finanzas2/page/cerrar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'ingreso.dart';
+import 'informe.dart'; // Importar la pantalla de informes
 
 void main() {
   runApp(MaterialApp(
@@ -73,13 +73,14 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               icon: Icon(Icons.exit_to_app),
               onPressed: () {
-                // Aquí deberías agregar la lógica para cerrar sesión
+                // Agrega la lógica para cerrar sesión aquí
                 // Por ejemplo, podrías navegar a la pantalla de inicio de sesión (MyApp).
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          MyApp()), // Reemplaza con tu pantalla de inicio de sesión
+                    builder: (context) =>
+                        MyApp(), // Reemplaza con tu pantalla de inicio de sesión
+                  ),
                 );
               },
             ),
@@ -148,43 +149,56 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () async {
-                final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => GastosForm()),
-                );
-
-                if (result != null) {
-                  setState(() {
-                    transactions.add(Transaction(result));
-                    updateAmount(Transaction(result), isExpense: true);
-                  });
-                }
-              },
-              child: const Text('Agregar Gastos'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () async {
-                final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => IngresosForm()),
-                );
-
-                if (result != null) {
-                  setState(() {
-                    transactions.add(Transaction(result));
-                    updateAmount(Transaction(result), isExpense: false);
-                  });
-                }
-              },
-              child: const Text('Agregar Ingresos'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    if (_amountController.text.isNotEmpty) {
+                      _showTransactionForm(context, isExpense: true);
+                    } else {
+                      _showSnackbar(context, 'Ingresa un monto primario');
+                    }
+                  },
+                  child: const Text('Gastos'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_amountController.text.isNotEmpty) {
+                      _showTransactionForm(context, isExpense: false);
+                    } else {
+                      _showSnackbar(context, 'Ingresa un monto primario');
+                    }
+                  },
+                  child: const Text('Ingresos'),
+                ),
+                ElevatedButton(
+                  onPressed: _showReport,
+                  child: const Text('Informe'),
+                ),
+              ],
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _showTransactionForm(BuildContext context,
+      {required bool isExpense}) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => isExpense ? GastosForm() : IngresosForm(),
+      ),
+    );
+
+    if (result != null) {
+      setState(() {
+        transactions.add(Transaction(result));
+        updateAmount(Transaction(result), isExpense: isExpense);
+      });
+    }
   }
 
   void updateAmount(Transaction transaction, {required bool isExpense}) {
@@ -195,6 +209,22 @@ class _HomeScreenState extends State<HomeScreen> {
     double newAmount = currentAmount + transactionAmount;
 
     _amountController.text = newAmount.toString();
+  }
+
+  void _showSnackbar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
+  void _showReport() {
+    // Navegar a la pantalla de informes
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => InformeScreen()),
+    );
   }
 }
 
@@ -222,7 +252,7 @@ class _GastosFormState extends State<GastosForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Agregar Gasto'),
+        title: const Text('Gasto'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -273,6 +303,81 @@ class _GastosFormState extends State<GastosForm> {
                 Navigator.pop(
                   context,
                   'Gasto: $descripcion - \$${monto.toStringAsFixed(2)}',
+                );
+              },
+              child: const Text('Guardar'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class IngresosForm extends StatefulWidget {
+  @override
+  _IngresosFormState createState() => _IngresosFormState();
+}
+
+class _IngresosFormState extends State<IngresosForm> {
+  final TextEditingController _descripcionController = TextEditingController();
+  final TextEditingController _montoController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Ingreso'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                color: Theme.of(context).colorScheme.background,
+              ),
+              child: const Icon(Icons.description, color: Colors.black),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _descripcionController,
+              decoration: const InputDecoration(
+                labelText: 'Descripción del ingreso',
+              ),
+            ),
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                color: Theme.of(context).colorScheme.background,
+              ),
+              child: const Icon(Icons.monetization_on, color: Colors.black),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _montoController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: 'Monto',
+              ),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                String descripcion = _descripcionController.text;
+                double monto = double.tryParse(_montoController.text) ?? 0.0;
+
+                print('Descripción: $descripcion');
+                print('Monto: $monto');
+
+                Navigator.pop(
+                  context,
+                  'Ingreso: $descripcion - \$${monto.toStringAsFixed(2)}',
                 );
               },
               child: const Text('Guardar'),
