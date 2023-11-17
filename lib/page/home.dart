@@ -1,7 +1,6 @@
 import 'package:finanzas2/page/cerrar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'informe.dart'; // Importar la pantalla de informes
 
 void main() {
   runApp(MaterialApp(
@@ -172,10 +171,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child: const Text('Ingresos'),
                 ),
-                ElevatedButton(
-                  onPressed: _showReport,
-                  child: const Text('Informe'),
-                ),
               ],
             ),
           ],
@@ -216,14 +211,6 @@ class _HomeScreenState extends State<HomeScreen> {
       SnackBar(
         content: Text(message),
       ),
-    );
-  }
-
-  void _showReport() {
-    // Navegar a la pantalla de informes
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => InformeScreen()),
     );
   }
 }

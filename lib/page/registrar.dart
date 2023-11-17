@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:finanzas2/page/database_helper.dart';
 import 'login.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -12,14 +13,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  DatabaseHelper _databaseHelper =
+      DatabaseHelper(); // Instancia de DatabaseHelper
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0), // Altura para el AppBar
+        preferredSize: Size.fromHeight(60.0),
         child: AppBar(
           backgroundColor: Colors.transparent,
-          elevation: 0, // Sin sombra
+          elevation: 0,
           title: Text(
             'REGISTRO',
             style: TextStyle(
@@ -29,8 +33,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           ),
           centerTitle: true,
-          systemOverlayStyle:
-              SystemUiOverlayStyle.light, // Asegura que el texto sea blanco
+          systemOverlayStyle: SystemUiOverlayStyle.light,
         ),
       ),
       body: Container(
@@ -46,58 +49,52 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Icono en grande encima del campo de nombre
               Container(
                 padding: EdgeInsets.only(bottom: 16.0),
                 child: Icon(
                   Icons.person,
-                  size: 48.0, // Tamaño grande del icono
-                  color: Colors.white, // Color del icono
+                  size: 48.0,
+                  color: Colors.white,
                 ),
               ),
-              // Nombre
               TextField(
                 controller: _nameController,
                 decoration: InputDecoration(
                   labelText: 'Nombre',
-                  prefixIcon: Icon(Icons.person), // Icono para el nombre
+                  prefixIcon: Icon(Icons.person),
                   contentPadding: EdgeInsets.symmetric(vertical: 16.0),
                 ),
               ),
               SizedBox(height: 16),
-              // Correo Electrónico
               TextField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   labelText: 'Correo Electrónico',
-                  prefixIcon:
-                      Icon(Icons.email), // Icono para el correo electrónico
+                  prefixIcon: Icon(Icons.email),
                   contentPadding: EdgeInsets.symmetric(vertical: 16.0),
                 ),
               ),
               SizedBox(height: 16),
-              // Contraseña
               TextField(
                 controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'Contraseña',
-                  prefixIcon: Icon(Icons.lock), // Icono para la contraseña
+                  prefixIcon: Icon(Icons.lock),
                   contentPadding: EdgeInsets.symmetric(vertical: 16.0),
                 ),
               ),
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  _register();
+                  _register(context);
                 },
                 child: Text('Registrar'),
               ),
               SizedBox(height: 16),
               GestureDetector(
                 onTap: () {
-                  // Navegar a la pantalla de inicio de sesión
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -106,8 +103,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Text(
                   '¿Ya tienes una cuenta? Ingresa',
                   style: TextStyle(
-                    color:
-                        Colors.white, // Puedes ajustar el color según tu diseño
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -119,22 +115,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  void _register() {
+  void _register(BuildContext context) async {
     String name = _nameController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
 
-    // Simulación de guardar en la base de datos (puedes conectar con tu lógica real aquí)
-    if (name.isNotEmpty && email.isNotEmpty && password.isNotEmpty) {
-      print('Registro exitoso para el usuario: $name, correo: $email');
+    Map<String, dynamic> tb_login = {
+      'name': name,
+      'email': email,
+      'password': password,
+    };
 
-      // Después de registrar, ir a la pantalla de inicio de sesión
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-      );
-    } else {
-      print('Error en el registro. Verifica tus datos.');
+    try {
+      int result = await _databaseHelper.insertLogin(tb_login);
+
+      if (result != 0) {
+        print('Registro exitoso para el usuario: $name, correo: $email');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+        );
+      } else {
+        print('Error en el registro. Verifica tus datos.');
+      }
+    } catch (e) {
+      print('Error durante la inserción en la base de datos: $e');
     }
   }
 }

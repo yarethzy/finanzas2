@@ -43,6 +43,8 @@ dependencies:
   firebase_auth: ^4.14.0
   firebase_database: ^10.3.4
   couchbase_lite: ^3.0.0-nullsafety.2
+  sqflite: ^2.3.0
+  sqflite_common_ffi: ^2.3.0+4
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,6 @@
-import 'package:finanzas2/page/login.dart';
 import 'package:finanzas2/page/registrar.dart';
 import 'package:flutter/material.dart';
+import 'page/login.dart';
 
 void main() {
   runApp(MyApp());

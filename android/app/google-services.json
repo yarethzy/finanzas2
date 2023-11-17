@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "469281232286",
-    "project_id": "finanasa",
-    "storage_bucket": "finanasa.appspot.com"
+    "project_number": "51773234161",
+    "project_id": "proyecto1-19fd5",
+    "storage_bucket": "proyecto1-19fd5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:469281232286:android:30fcdab413a072397b728f",
+        "mobilesdk_app_id": "1:51773234161:android:24be6720045ed46e34c250",
         "android_client_info": {
           "package_name": "com.example.finanzas2"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBysY0JwokuCTQM0lQ1hF1lYg8ZlR9jhyY"
+          "current_key": "AIzaSyBiuBDa7YkDJ-_gME9UgKtMNoVuOdndjRc"
         }
       ],
       "services": {
