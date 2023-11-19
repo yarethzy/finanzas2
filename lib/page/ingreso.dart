@@ -18,54 +18,30 @@ class _IngresosFormState extends State<IngresosForm> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Caja de texto redonda con icono para la descripción
-            Container(
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Theme.of(context).backgroundColor, // Color de fondo
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.description, color: Colors.black),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: TextField(
-                      controller: _descripcionController,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Descripción del ingreso',
-                      ),
-                    ),
-                  ),
-                ],
+            TextFormField(
+              controller: _descripcionController,
+              decoration: InputDecoration(
+                labelText: 'Descripción del ingreso',
+                prefixIcon: Icon(Icons.description),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
               ),
             ),
             SizedBox(height: 16),
             // Caja de texto redonda con icono para el monto
-            Container(
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Theme.of(context).backgroundColor, // Color de fondo
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.monetization_on, color: Colors.black),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: TextField(
-                      controller: _montoController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Monto',
-                      ),
-                    ),
-                  ),
-                ],
+            TextFormField(
+              controller: _montoController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: 'Monto',
+                prefixIcon: Icon(Icons.monetization_on),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
               ),
             ),
             SizedBox(height: 16),
@@ -85,6 +61,11 @@ class _IngresosFormState extends State<IngresosForm> {
                   'Ingreso: $descripcion - \$${monto.toStringAsFixed(2)}',
                 );
               },
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
               child: Text('Guardar'),
             ),
           ],
