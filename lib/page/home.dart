@@ -1,4 +1,4 @@
-import 'package:finanzas2/page/cerrar.dart';
+import 'package:finanzas2/main.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -6,15 +6,9 @@ void main() {
   runApp(MaterialApp(
     home: HomeScreen(),
     theme: ThemeData(
-      primaryColor: Colors.greenAccent,
-      colorScheme: ColorScheme.fromSwatch()
-          .copyWith(
-            secondary: Colors.yellow,
-            background: Colors.lightBlue,
-          )
-          .copyWith(
-            background: Colors.greenAccent,
-          ),
+      primaryColor: Colors.blue, // Cambia a tu color primario preferido
+      hintColor: Colors.yellow, // Cambia a tu color secundario preferido
+      backgroundColor: Colors.white, // Cambia al color de fondo deseado
     ),
   ));
 }
@@ -37,9 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Container(
               padding: const EdgeInsets.all(8.0),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.green,
+                color: Colors.blue, // Cambia al color deseado
               ),
               child: const Text(
                 '\$',
@@ -77,8 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        MyApp(), // Reemplaza con tu pantalla de inicio de sesión
+                    builder: (context) => MyApp(), // Reemplaza con tu pantalla de inicio de sesión
                   ),
                 );
               },
@@ -86,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         automaticallyImplyLeading: false,
+        backgroundColor: Colors.blue, // Cambia al color deseado
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -159,6 +153,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       _showSnackbar(context, 'Ingresa un monto primario');
                     }
                   },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue, // Cambia al color deseado
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                   child: const Text('Gastos'),
                 ),
                 ElevatedButton(
@@ -169,6 +169,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       _showSnackbar(context, 'Ingresa un monto primario');
                     }
                   },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue, // Cambia al color deseado
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                   child: const Text('Ingresos'),
                 ),
               ],
@@ -240,6 +246,7 @@ class _GastosFormState extends State<GastosForm> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Gasto'),
+        backgroundColor: Colors.blue, // Cambia al color deseado
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -292,6 +299,12 @@ class _GastosFormState extends State<GastosForm> {
                   'Gasto: $descripcion - \$${monto.toStringAsFixed(2)}',
                 );
               },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue, // Cambia al color deseado
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
               child: const Text('Guardar'),
             ),
           ],
@@ -315,6 +328,7 @@ class _IngresosFormState extends State<IngresosForm> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ingreso'),
+        backgroundColor: Colors.blue, // Cambia al color deseado
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -367,6 +381,12 @@ class _IngresosFormState extends State<IngresosForm> {
                   'Ingreso: $descripcion - \$${monto.toStringAsFixed(2)}',
                 );
               },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue, // Cambia al color deseado
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
               child: const Text('Guardar'),
             ),
           ],
