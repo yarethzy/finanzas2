@@ -13,28 +13,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  DatabaseHelper _databaseHelper =
-      DatabaseHelper(); // Instancia de DatabaseHelper
+  DatabaseHelper _databaseHelper = DatabaseHelper();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
-        child: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: Text(
-            'REGISTRO',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-            ),
+      appBar: AppBar(
+        title: Text(
+          'REGISTRO',
+          style: TextStyle(
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
           ),
-          centerTitle: true,
-          systemOverlayStyle: SystemUiOverlayStyle.light,
         ),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -44,19 +39,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
             colors: [Colors.blue, Colors.green],
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                padding: EdgeInsets.only(bottom: 16.0),
-                child: Icon(
-                  Icons.person,
-                  size: 48.0,
-                  color: Colors.white,
-                ),
+              Icon(
+                Icons.person,
+                size: 48.0,
+                color: Colors.white,
               ),
+              SizedBox(height: 16),
               TextField(
                 controller: _nameController,
                 decoration: InputDecoration(
@@ -85,7 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   contentPadding: EdgeInsets.symmetric(vertical: 16.0),
                 ),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 24),
               ElevatedButton(
                 onPressed: () {
                   _register(context);
