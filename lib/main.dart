@@ -39,7 +39,7 @@ class MyHomePage extends StatelessWidget {
               },
               child: Text('Iniciar Sesión'),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 26),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -47,7 +47,7 @@ class MyHomePage extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => RegisterScreen()),
                 );
               },
-              child: Text('Registrarse'),
+              child: Text('REGISTRARSE'),
             ),
           ],
         ),
